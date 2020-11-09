@@ -122,11 +122,13 @@ CRITERION_FLAGS		=	--coverage -lcriterion
 
 SRC	=	$(shell find lib -name '*.c')
 
+SRC	+=	$(shell find src -name '*.c')
+
 MAIN	=	$(shell find . -name '*main.c')
 
 # TEST_SRCS	=	$(addprefix tests/, )\
 
-TEST_SRCS	=	$(shell find test -name '*.c')
+TEST_SRCS	=	$(shell find tests -name '*.c')
 
 TEST_SRCS	+=	$(SRC)
 
@@ -137,7 +139,7 @@ OBJ	= 	$(SRC:.c=.o) $(MAIN:.c=.o)
 all: 	$(NAME)
 
 ifeq ($(DEBUG),yes)
-	$(CFLAGS) += g3
+	$(CFLAGS) += g g3 -ggdb
 endif
 
 %.o:	%.c
@@ -151,11 +153,17 @@ CLIB:
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) -o $(NAME) $(CFLAGS) $(LIB)
 	@$(eval($(MAK) := 9))
+	@echo -e " ██╗   ██╗███████╗ ███╗   ██╗ ███╗   ██╗";
+	@echo -e " ╚██╗ ██╔╝██╔══██║ ████╗  ██║ ████╗  ██║";
+	@echo -e "  ╚████╔╝ ███████║ ██╔██╗ ██║ ██╔██╗ ██║";
+	@echo -e "   ╚██╔╝  ██╔══██║ ██║╚██╗██║ ██║╚██╗██║";
+	@echo -e "    ██║   ██║  ██║ ██║ ╚████║ ██║ ╚████║";
+	@echo -e "    ╚═╝   ╚═╝  ╚═╝ ╚═╝  ╚═══╝ ╚═╝  ╚═══╝\033[0m";
 	# @mv lib/$(NAME) .
 	# @ar rc -o $(NAME) $(OBJ)
 
 ifeq ($(MAK),)
-	@if [ $(USER) != "YANN" ]; then echo -e "\e[1mCOMPILATION BY $(USER)\e[4                                                                                                                                                                                                                                             m\nPS makefile fais par yann nshare (yann.nshare@epitech.eu)\e[0m \e[5mHAHAHA!\e[0m"; fi
+	@if [ $(USER) != "YANN" ]; then echo -e "\e[1mCOMPILATION BY $(USER)\e[4                                                                                                                                                                                                                                             m\nPS: makefile fais par yann nshare (yann.nshare@epitech.eu)\e[0m \e[5mHAHAHA!\e[0m"; fi
 ifeq ($(USER),YANN)
 	@echo -e "\e[1mCOMPILATION BY THE KING \e[4mYANN NSHARE\e[0m \033[5mHAHAHA!\e[0m"
 	@echo -e "\033[32m$(PRINT) COMPLETED SUCCESSFUL $(PRINT)\033[0m"
