@@ -22,6 +22,8 @@ CLEAR_END = echo -e "$(RED) $(PRINT) CLEANED SUCCESSFUL $(PRINT)$(END)"
 
 COMPIL_LIB_START = echo -e "$(TURQUOISE) $(PRINT) LIB COMPILATION $(PRINT)$(END)"
 COMPIL_LIB_END = echo -e "$(TURQUOISE) $(PRINT) LIB COMPILATION SUCCESSFUL $(PRINT)$(END)"
+COMPIL_PROJECT_START = echo -e "$(GREEN) $(PRINT) PROJECT COMPILATION $(PRINT)$(END)"
+COMPIL_PROJECT_END = echo -e "$(GREEN) $(PRINT) PROJECT COMPILATION SUCCESSFUL $(PRINT)$(END)"
 
 PRINT = $(shell printf '%0.1s' '*'{1..40})
 #########################################################################################################################################
@@ -111,7 +113,7 @@ FILE = .gitignore
 
 ADD_HEADERS_DIR = $(addprefix -I./, $(HEADERS_DIR))
 
-CFLAGS	+= 	$(ADD_HEADERS_DIR) -W -Wall ##
+CFLAGS	+= 	$(ADD_HEADERS_DIR) -W -Wall
 
 CFLAGCLANG += clang -Wno-padded -Weverything -g -g3 -ggdb
 
@@ -120,9 +122,9 @@ CRITERION_FLAGS		=	--coverage -lcriterion
 
 # SRC	=	$(addprefix src/, )
 
-SRC	=	$(shell find lib -name '*.c')
+# SRC	=	$(shell find lib -name '*.c')
 
-SRC	+=	$(shell find src -name '*.c')
+SRC	=	$(shell find src -name '*.c')
 
 MAIN	=	$(shell find . -name '*main.c')
 
@@ -143,6 +145,7 @@ ifeq ($(DEBUG),yes)
 endif
 
 %.o:	%.c
+	@$(COMPIL_PROJECT_START)
 	@$(CC) $(CFLAGS) $(LIB) -c -o $@ $< && echo -e "\e[32m[OK]\033[0m\e[1m\e[32m" $< "\033[0m" || echo -e "\e[91;5m[KO]\e[25m" $< "\033[5m\n    T'est même pas cappable de compiler sans error $(USER) $(END)"
 
 CLIB:
@@ -150,7 +153,7 @@ CLIB:
 	@$(MAKE) -C lib
 	@$(COMPIL_LIB_END)
 
-$(NAME): $(OBJ)
+$(NAME): CLIB $(OBJ)
 	@$(CC) $(OBJ) -o $(NAME) $(CFLAGS) $(LIB)
 	@$(eval($(MAK) := 9))
 	@echo -e " ██╗   ██╗███████╗ ███╗   ██╗ ███╗   ██╗";

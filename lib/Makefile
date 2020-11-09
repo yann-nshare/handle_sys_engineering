@@ -11,7 +11,17 @@ NAME	=	libmy.a
 
 NAME_TEST	=	tests
 
-INCLUDE	=	-I./include/
+SUBDIRS = $(shell find . -type d)
+
+HEADERS_DIR = $(shell find . -type d)
+
+ADD_HEADERS_DIR = $(addprefix -I./, $(HEADERS_DIR))
+
+CFLAGS	+= 	$(ADD_HEADERS_DIR) -W -Wall
+
+SRC	=	$(shell find . -name '*.c')
+
+OBJ	= 	$(SRC:.c=.o)
 
 CC	= 	gcc
 
@@ -19,11 +29,12 @@ RM	=	rm -f
 
 all:	$(NAME)
 
-$(NAME):
-	@make -C ./lib
-	@make -C ./new_lib_nb
-	@make -C ./listlib
+%.o:	%.c
+	@$(CC) $(CFLAGS) $(LIB) -c -o $@ $< && echo -e "\e[96m[OK]\033[0m\e[1m\e[96m" $< "\033[0m" || echo -e "\e[91;5m[KO]\e[25m" $< "\033[5m\n    T'est même pas cappable de compiler une lib sans error $(USER) $(END)"
 
+
+$(NAME):	$(OBJ)
+	@ar rc -o $(NAME) $(OBJ)
 
 clean:
 	@$(RM) $(NAME)
