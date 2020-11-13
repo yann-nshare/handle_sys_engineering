@@ -15,19 +15,22 @@ void print_error(const char *str, int c)
     // my_printf((char *)str, c);
 }
 
-void set_errno_(errno_t *errno_, char *msg,
-exit_value_e exit, errno_value_e value)
+void set_errno
+(type_errno_u errno_type, char *msg, exit_value_e exit, errno_value_e value)
 {
+    char *str_error[] = MSG_ERROR
+    char *str_warning[] = MSG_WARNING
+
+    errno_->type = errno_type;
     errno_->errno_msg = msg;
     errno_->exit = exit;
-    errno_->value = value;
 }
 
-void set_errno_from_type(errno_t *errno_, unsigned int type)
+void set_errno_from_type(errno_t *errno_, type_errno_u errno_type)
 {
     char *msg[] = MSG_ERROR;
 
     errno_->errno_msg = msg[type];
-    errno_->value = type;
+    errno_->type = type;
     errno_->exit = (type == NOT_ERROR) ? (0) : (FAIL);
 }
