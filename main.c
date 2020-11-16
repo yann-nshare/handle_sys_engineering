@@ -5,7 +5,9 @@
 ** main.c
 */
 
+#include "m_errno.h"
+
 int main(void)
 {
-    return 0;
+    return (0);
 }
