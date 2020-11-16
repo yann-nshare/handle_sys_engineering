@@ -33,7 +33,6 @@ void set_errno(const int tag, const int msg_index, int value, const exit_value_e
             break;
         default:
             return;
-    }
-    errno_.tag = tag;
+    } errno_.tag = tag;
     errno_.exit = exit;
 }
