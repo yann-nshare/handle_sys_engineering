@@ -173,7 +173,7 @@ ifeq ($(USER),YANN)
 endif
 endif
 
-git: fclean# for use:   make git m="your message"
+git: fclean # for use:   make git m="your message"
 	@git pull
 	@git status
 	@git add "$(f-add)"
@@ -192,6 +192,7 @@ functionnel: ; $(value test_fonctionnel)
 tests_run:	CLIB
 	@$(CC) -o exetest -I./include $(TEST_SRCS) $(LIB) $(CRITERION_FLAGS) $(ADD_HEADERS_DIR)
 	@./exetest
+	@$(RM) exetest
 
 
 # delete files
@@ -213,12 +214,12 @@ ifeq ($(USER),MAYEUL)
 endif
 
 test:	tests_run
-	gcovr --exclude tests/ > test_1
-	gcovr --exclude tests/ --branches > test_2
-	make
-	clear
-	cat test_1
-	cat test_2
+	@gcovr --exclude tests/ > test_1
+	@gcovr --exclude tests/ --branches > test_2
+	@make
+	@clear
+	@cat test_1
+	@cat test_2
 
 re:	fclean all
 

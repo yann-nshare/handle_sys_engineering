@@ -14,53 +14,17 @@
 #define CTOI(x, check_x)\
             ((check_x >= '0' && check_x <= '9') ? ((x - '0')) : (x))
 
-#define APPLY_CARRY \
-            if (( ( (CTOI(a[i], a[i])) * (CTOI(b[j], b[j])) ) + carry ) > 9)\
-                result = (( ( (CTOI(a[i], a[i]))\
-                * (CTOI(b[j], b[j])) ) + carry) % 10);\
-            else\
-                result = (CTOI(a[i], a[i]) * CTOI(b[j], b[j])) + carry;\
-            ((CTOI(a[i], a[i]) * CTOI(b[j], b[j]) + carry) > 9)\
-            ? (carry = (( ( (CTOI(a[i], a[i])) * (CTOI(b[j], b[j])) )\
-            + carry ) / 10)) : (carry = 0);
-
-
-#define ALL_VARIABLE int idx = 0;\
-    int temp = CTOI(number[idx], number[idx]);\
-    int i = 0;\
-    int comma = 0;\
-    int sup = 0;\
-    int zero = 0;
-
-#define OP_DIV for (; 10 + comma > i; idx++) { \
-        if (number[idx] == '\0' && temp % divisor == 0 && temp == 0)\
-            break;\
-        ans[i++] = ITOC((temp / divisor), (temp / divisor));\
-        (temp % divisor == 0 && number[idx] == '0') ? (zero = 1) : (zero = 0);\
-        if (temp % divisor != 0 && comma == 0 && !number[idx]) {\
-            ans[i++] = '.';\
-            comma = 2;\
-        }\
-        sup = CTOI(number[idx], number[idx]);\
-        if (!number[idx])\
-            idx--;\
-        temp = ((temp % divisor) * 10) + sup;}
-
-#define CHECK_DIV if (my_strlen(divise) > 9)\
-        return NULL;\
-    if (my_getnbr(divise) == 0) return NULL;
-
-#define CHECK_IF_ZERO if (zero)\
-        ans[i++] = ITOC((temp / divisor), (temp / divisor));\
-    if (my_strlen(ans) == 0) return "0";
-
-#define CHECK_ZERO(x) if (x[0] == '0') return my_strdup("0");
-
 typedef struct linked_list
 {
     char *data;
     struct linked_list *next;
 } linked_list_t;
+
+typedef struct linked_list_advance_t
+{
+    int hash;
+    struct linked_list_advance_t *next;
+} linked_list_advance_t;
 
 int my_apply_on_matching_nodes(linked_list_t *begin, int(*f)(),
 void const *data_ref, int (*cmp)());
